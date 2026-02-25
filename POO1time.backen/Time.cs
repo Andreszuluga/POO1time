@@ -1,52 +1,58 @@
 ﻿using POO1time.backen.POO1time.backen;
 
-namespace POO1time.backen
+namespace POO1time.backen;
 {
-    namespace POO1time.backen
-    {
+   
         public class Time
         {
-            private int hour;
-            private int minute;
-            private int second;
-            private int millisecond;
+            private int _hour;
+            private int _minute;
+            private int _second;
+            private int _millisecond;
 
             // 1. 1. No parameters
-            public Time() : this(0, 0, 0, 0) { }
+            public Time() 
+            {
+                this.hour = 0;
+                this.minute = 0;
+                this.second = 0;
+                this.millisecond = 0;
+    }
 
 
-            // 2. Just hours
-            public Time(int hour) : this(hour, 0, 0, 0) { }
+
+    // 2. Just hours
+    public Time(int hour)
+    {
+        Hour = hour;
+    }
+
+    // 3. Hours and minutes
+    public Time(int hour, int minute)
+    { Hour = hour; 
+       Minute = minute;  
+       
+
+    }
 
 
-            // 3. Hours and minutes
-            public Time(int hour, int minute) : this(hour, minute, 0, 0) { }
-
-
-            // 4. Hours, minutes, and seconds
-            public Time(int hour, int minute, int second) : this(hour, minute, second, 0) { }
-
+    // 4. Hours, minutes, and seconds
+    public Time(int hour, int minute, int second)
+    {
+        Hour = hour;
+        Minute = minute;
+        Seconds = second;
+    }
 
             // 5. Main builder
             public Time(int hour, int minute, int second, int millisecond)
             {
-                if (hour < 0 || hour > 23)
-                    throw new ArgumentException("Invalid time");
+        Hour = hour;
+        Minute = minute;
+        Seconds = second;
+        Millisecond = millisecond;
 
-                if (minute < 0 || minute > 59)
-                    throw new ArgumentException("Invalid minute");
-
-                if (second < 0 || second > 59)
-                    throw new ArgumentException("Second invalid");
-
-                if (millisecond < 0 || millisecond > 999)
-                    throw new ArgumentException("Invalid millisecond");
-
-                this.hour = hour;
-                this.minute = minute;
-                this.second = second;
-                this.millisecond = millisecond;
-            }
+    }
 
             public override string ToString()
             {
@@ -99,7 +105,7 @@ namespace POO1time.backen
                 return new Time(h, m, s, ms);
             }
         }
-    }
+    
 }
 -----------------------------------------------------------------------------------------------------------------------------------------
 using System;
