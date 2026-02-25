@@ -1,68 +1,90 @@
 ﻿using POO1time.backen.POO1time.backen;
 
 namespace POO1time.backen;
-{
-   
-        public class Time
-        {
-            private int _hour;
-            private int _minute;
-            private int _second;
-            private int _millisecond;
+
+    public class Time
+    {
+        private int _hour;
+        private int _minute;
+        private int _second;
+        private int _millisecond;
 
             // 1. 1. No parameters
-            public Time() 
-            {
-                this.hour = 0;
-                this.minute = 0;
-                this.second = 0;
-                this.millisecond = 0;
-    }
+        public Time() 
+        {
+            hour = 0;
+            minute = 0;
+            second = 0;
+            millisecond = 0;
+        }
 
 
 
     // 2. Just hours
-    public Time(int hour)
-    {
-        Hour = hour;
-    }
+        public Time(int hour)
+        {
+            Hour = hour;
+        }
 
     // 3. Hours and minutes
-    public Time(int hour, int minute)
-    { Hour = hour; 
-       Minute = minute;  
+        public Time(int hour, int minute)
+        {   Hour = hour; 
+        Minute = minute;  
        
 
-    }
+        }
 
 
     // 4. Hours, minutes, and seconds
-    public Time(int hour, int minute, int second)
-    {
-        Hour = hour;
-        Minute = minute;
-        Seconds = second;
-    }
+        public Time(int hour, int minute, int second)
+        {
+             Hour = hour;
+            Minute = minute;
+            Seconds = second;
+        }
 
             // 5. Main builder
             public Time(int hour, int minute, int second, int millisecond)
             {
-        Hour = hour;
-        Minute = minute;
-        Seconds = second;
-        Millisecond = millisecond;
+            Hour = hour;
+            Minute = minute;
+            Seconds = second;
+            Millisecond = millisecond;
+
+            }
+    public int Hour
+    {
+        get => _hour;
+        set=> _hour =  ValidHour(value);
+    }
+
+    public int Minute
+    {
+        get => _minute; 
+        set => _minute = ValidMinute(value);
 
     }
 
-            public override string ToString()
+    public int Seconds
+    {
+        get => _second;
+        set => _second = ValidSecond(value);
+    }
+     public int Millisecond
+
+     {  get => _millisecond;
+        set => _millisecond = ValidMillisecond(value);
+     }
+
+    public override string ToString()
             {
-                int displayHour = hour % 12;
+                int displayHour = Hour % 12;
                 if (displayHour == 0)
                     displayHour = 12;
 
-                string ampm = hour < 12 ? "AM" : "PM";
+                string ampm = Hour < 12 ? "AM" : "PM";
 
-                return $"{displayHour:D2}:{minute:D2}:{second:D2}.{millisecond:D3} {ampm}";
+                return $"{displayHour:00}:{Minute:00}:{Second:00}.{Millisecond:00} {ampm}";
             }
 
             public int ToMilliseconds()
@@ -82,31 +104,58 @@ namespace POO1time.backen;
 
             public bool IsOtherDay(Time other)
             {
-                return this.ToMilliseconds() + other.ToMilliseconds() >= 24 * 60 * 60 * 1000;
+                int totaLHours = this.hour + other.hour;
+            if (totaLHours >= 24)
+                    return true;
+                else
+                    return false;
             }
 
             public Time Add(Time other)
             {
-                int totalMs = this.ToMilliseconds() + other.ToMilliseconds();
+                int totalMilliseconds = this.ToMilliseconds() + other.ToMilliseconds();
 
                 int msInDay = 24 * 60 * 60 * 1000;
 
-                totalMs = totalMs % msInDay;
+            totalMilliseconds = totalMilliseconds % msInDay;
 
-                int h = totalMs / (3600 * 1000);
-                totalMs %= (3600 * 1000);
+                int h = totalMilliseconds / (3600 * 1000);
+            totalMilliseconds %= (3600 * 1000);
 
-                int m = totalMs / (60 * 1000);
-                totalMs %= (60 * 1000);
+                int m = totalMilliseconds / (60 * 1000);
+            totalMilliseconds %= (60 * 1000);
 
-                int s = totalMs / 1000;
-                int ms = totalMs % 1000;
+                int s = totalMilliseconds / 1000;
+                int ms = totalMilliseconds % 1000;
 
                 return new Time(h, m, s, ms);
             }
+        private int ValidHour(int hour)
+        {
+            if (hour < 0 || hour > 23)
+                throw new ArgumentOutOfRangeException(nameof(hour), "Hour must be between 0 and 23.");
+            return hour;
         }
+        private int ValidMinute(int minute)
+        {
+            if (minute < 0 || minute > 59)
+                throw new ArgumentOutOfRangeException(nameof(minute), "Minute must be between 0 and 59.");
+            return minute;
+        }
+        private int ValidSecond(int second)
+        {
+            if (second < 0 || second > 59)
+                throw new ArgumentOutOfRangeException(nameof(second), "Second must be between 0 and 59.");
+            return second;
+        }
+        private int ValidMillisecond(int millisecond)
+        {
+            if (millisecond < 0 || millisecond > 999)
+                throw new ArgumentOutOfRangeException(nameof(millisecond), "Millisecond must be between 0 and 999.");
+            return millisecond;
+    }
     
-}
+
 -----------------------------------------------------------------------------------------------------------------------------------------
 using System;
 
